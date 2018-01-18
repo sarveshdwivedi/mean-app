@@ -1,0 +1,105 @@
+<div class="navbar navbar-default" id="navbar">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="javascript:void(0);" class="navbar-brand">
+                <small>
+                    <i class="icon-leaf"></i>
+                    Social Networking
+                </small>
+            </a><!-- /.brand -->
+        </div><!-- /.navbar-header -->
+
+        <div class="navbar-header pull-right" role="navigation">
+
+            <ul class="nav ace-nav">               
+
+                <li class="purple">                
+                <!--<li class="purple">-->                
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">
+                        <i class="icon-bell-alt icon-animated-bell"></i>
+                        <span class="badge badge-important">{{pendingFriends|| '0'}}</span>
+                    </a> 
+                    <ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">                       
+
+                        <li>
+                            <a href="#/friends">
+                                See all pending request
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="green">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:void(0);">
+                        <i class="icon-envelope icon-animated-vertical"></i>
+                    </a> 
+                    <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">                 
+
+                        <li>
+                            <a href="#/inboxmessages" style="text-align: center">
+                                Inbox Items
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#/sentmessages">
+                                Sent Item
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="light-blue">
+                    <a data-toggle="dropdown" href="javascript:void(0);" class="dropdown-toggle">
+                        <img class="nav-user-photo" ng-src="{{userData.image|| '/assets/avatars/profile-pic.jpg' }}" alt=" {{userData.username}} Photo" />
+                        <span class="user-info">
+                            <small>Welcome,</small>
+                            {{username}}
+                        </span>
+
+                        <i class="icon-caret-down"></i>
+                    </a>
+
+                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#/changepassword">
+                                <i class="icon-cog"></i>
+                                Change Password
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#/profile">
+                                <i class="icon-user"></i>
+                                Profile
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a ng-controller="LogoutCtrl" href="javascript:void(0);" ng-click="logout()">
+                                <i class="icon-off"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="red">
+                    <a ng-controller="LogoutCtrl" href="javascript:void(0);" ng-click="logout()">
+                        <i class="icon-off"></i>Logout
+                    </a>
+                </li>
+            </ul><!-- /.ace-nav -->
+        </div><!-- /.navbar-header -->
+    </div><!-- /.container -->
+</div>

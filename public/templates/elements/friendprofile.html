@@ -1,0 +1,173 @@
+<div ng-include='"templates/partials/header.html"'></div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+                try {
+                ace.settings.check('main-container', 'fixed')
+                } catch (e) {
+        }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="javascript:void(0);">
+            <span class="menu-text"></span>
+        </a>
+
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                            try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                            } catch (e) {
+                    }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="javascript:void(0);">Home</a>
+                    </li>
+                    <li class="active">User Profile</li>
+                </ul><!-- .breadcrumb -->
+               <div ng-include='"templates/partials/search.html"'></div>
+            </div>
+
+            <div class="page-content" ng-controller="UserCtrl" ng-init="getFriendData()">
+                <div class="page-header">
+                    <h1>
+                        User Profile
+                        <small>
+                            <i class="icon-double-angle-right"></i>
+                            {{userData.first_name == "" && userData.last_name == "" ? userData.username : userData.first_name + ' ' + userData.last_name  | capitalize }}
+                        </small>
+                    </h1>
+                </div><!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="hr dotted"></div>                        
+                        <div>
+                            <div id="user-profile-2" class="user-profile">
+                                <div class="tabbable">                                   
+
+                                    <div class="tab-content no-border padding-24">
+                                        <div id="home" class="tab-pane in active">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-3 center">
+                                                    <div>                         
+                                                        <form  ng-controller="UploadCtrl as up" name="up.upload_form">
+                                                            <span class="profile-picture">
+                                                                <img id="avatar" class="editable img-responsive" alt="{{userData.first_name}} {{userData.last_name}} Avatar" ng-src="{{ profilefilenamePath || userData.image || '/assets/avatars/profile-pic.jpg' }}" />
+                                                            </span>                                                           
+                                                            <!--<img style="width:100px;" ngf-thumbnail="up.file"/>-->                                                           
+                                                        </form>
+
+                                                        <div class="space-4"></div>
+
+                                                        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                                                            <div class="inline position-relative">
+                                                                <a href="javascript:void(0);" class="user-title-label dropdown-toggle" data-toggle="dropdown">
+                                                                    <i class="icon-circle light-green middle"></i>
+                                                                    &nbsp;
+                                                                    <span class="white"> {{userData.first_name == "" && userData.last_name == "" ? userData.username : userData.first_name + ' ' + userData.last_name  | capitalize }} </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="space space-4"></div>
+                                                    
+                                                </div><!-- /span -->
+
+                                                <div class="col-xs-12 col-sm-9">                                                  
+
+                                                    <div class="profile-user-info">
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Username </div>
+
+                                                            <div class="profile-info-value">
+                                                                <span> {{userData.username=""?'Not available':userData.username}} </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Name </div>
+
+                                                            <div class="profile-info-value">
+                                                                <span> {{userData.first_name == "" && userData.last_name == "" ? 'Not available' : userData.first_name + ' ' + userData.last_name  | capitalize }}  </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Location </div>
+
+                                                            <div class="profile-info-value">
+                                                                <i class="icon-map-marker light-orange bigger-110"></i>
+                                                                <span>{{userData.location=""?'Not available':userData.location}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Email </div>
+
+                                                            <div class="profile-info-value">
+                                                                <span>{{userData.email=""?'Not available':userData.email}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Joined </div>
+
+                                                            <div class="profile-info-value">
+                                                                <span> {{userData.joined=""?'Not available':userData.joined| date:'medium'}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="hr hr-8 dotted"></div>                                                   
+                                                </div><!-- /span -->
+                                            </div><!-- /row-fluid -->
+
+                                            <div class="space-20"></div>
+
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12">
+                                                    <div class="widget-box transparent">
+                                                        <div class="widget-header widget-header-small">
+                                                            <h4 class="smaller">
+                                                                <i class="icon-check bigger-110"></i>
+                                                                About Me
+                                                            </h4>
+                                                        </div>
+
+                                                        <div class="widget-body">
+                                                            <div class="widget-main">
+                                                                {{userData.aboutme=""?'Not available':userData.aboutme}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="userData.location != ''">
+                                                    <google-map lat='{{userData.lat}}' lng='{{userData.lng}}' name='{{location}}'></google-map>                                                 
+                                                </div>
+                                                
+
+                                            </div>
+                                        </div><!-- #home -->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
+
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+
+    </div><!-- /.main-container-inner -->
+
+</div>

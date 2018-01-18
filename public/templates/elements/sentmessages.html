@@ -1,0 +1,134 @@
+<div ng-include='"templates/partials/header.html"'></div>
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="javascript:void(0);">
+            <span class="menu-text"></span>
+        </a>
+
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="javascript:void(0);">Home</a>
+                    </li>
+                    <li class="active">Sent Items</li>
+                </ul><!-- .breadcrumb -->
+
+               <div ng-include='"templates/partials/search.html"'></div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        Message
+                        <small>
+                            <i class="icon-double-angle-right"></i>
+                            Listing
+                        </small>
+                    </h1>
+                </div><!-- /.page-header -->
+                <div class="row" ng-controller="MsgCtrl" ng-init="getSentItems()">
+                    <div class="col-sm-12">
+                        <div class="boxPad0Inner">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-1 control-label">Search</label>
+                                    <div class="col-sm-4 padB5">
+                                        <input type="text" class="form-control" placeholder="Search" ng-model="search" ng-change="searchText();"></div>
+                                    <div class="pull-right">
+                                        <div class="col-sm-9">
+                                            <p>
+                                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Compose</button>
+                                            </p>            
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="table-responsive"> 
+                                <table ng-table="tableParams" show-filter="false" class="table table-condensed table-bordered table-striped">
+                                    <tr ng-repeat="msg in $data| filter: search">
+                                        <td data-title="'S.no.'">{{$index + 1 + ((params.page() - 1) * params.count())}}</td>
+                                        <td data-title="'Message'" sortable="'body'">{{msg.body}}</td>
+                                        <td data-title="'Sent by'" sortable="'sender_id.first_name'">{{msg.sender_id.first_name}} {{msg.sender_id.last_name || msg.sender_id.username}}</td>
+                                        <td data-title="'Recieved by'" sortable="'reciever_id.first_name'">{{msg.reciever_id.first_name}} {{msg.reciever_id.last_name || msg.reciever_id.username}}</td>
+                                        <td data-title="'Date'" sortable="'create_date'">{{msg.create_date| date:'medium'}}</td>                                       
+                                    </tr>
+                                </table>                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.page-content -->
+    </div><!-- /.main-content -->
+    <a href="javascript:void(0);" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+    </a>
+
+</div><!-- /.main-container-inner -->
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Compose Message</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-box">
+
+                    <div id="error" style="color: red;" ng-repeat="x in error">{{ x.msg}}</div>  
+                    <div id="error" style="color: green;">{{sucess}}</div>
+                    <flash-message duration="5000" show-close="true"></flash-message>
+                    <div class="form-bottom" ng-controller="MsgCtrl" ng-init="userlist()">
+                        <form role="form"  name="msgForm" method="post" class="login-form">
+                            Select user from below list to send message
+                            <div class="form-group" >
+                                <label class="sr-only" for="form-username">Users</label>                                    
+                                <select data-native-menu="false" data-role="listview" ng-model="messages.reciever_id">
+                                    <option ng-repeat="user in userList"  value="{{user._id}}" >{{user.username}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="sr-only" for="form-message">Message</label>
+                                <textarea ng-model="messages.message" name="message" placeholder="Message..." class="form-about-yourself form-control" id="form-about-yourself"></textarea>  
+                                <span style="color:red" ng-show="msgForm.message.$dirty && msgForm.message.$invalid">
+                                    <span ng-show="msgForm.message.$error.required"> Message is required.</span> 
+                                </span>
+
+                            </div>
+                            <button ng-click="saveMessage(messages)"class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

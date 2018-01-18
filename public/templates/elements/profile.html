@@ -1,0 +1,178 @@
+<div ng-include='"templates/partials/header.html"'></div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+                try {
+                ace.settings.check('main-container', 'fixed')
+                } catch (e) {
+        }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="javascript:void(0);">
+            <span class="menu-text"></span>
+        </a>
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                            try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                            } catch (e) {
+                    }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="#/dashboard">Home</a>
+                    </li>
+                    <li class="active">User Profile</li>
+                </ul>
+            </div>
+
+            <div class="page-content" ng-controller="UserCtrl" ng-init="getUserData()">
+                <div class="page-header">
+                    <h1>
+                        User Profile
+                        <small>
+                            <i class="icon-double-angle-right"></i>
+                            {{name}}
+                        </small>
+                    </h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="clearfix">
+                            <div class="pull-left alert alert-success no-margin">
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <i class="icon-remove"></i>
+                                </button>
+
+                                <i class="icon-umbrella bigger-120 blue"></i> Click on the image below or on profile fields
+                                to edit them ...
+                            </div>
+                            <div class="pull-right alert alert-danger no-margin">
+                                <a href="#/editprofile"> <button type="button" class="btn btn-danger" data-dismiss="alert">
+                                        Edit
+                                    </button>
+                                </a>
+
+                                <i class="icon-umbrella bigger-120 blue"></i> Click on the Edit button to update profile
+                                info ...
+                            </div>
+                        </div>
+
+                        <div class="hr dotted"></div>
+                        <flash-message duration="5000" show-close="true"></flash-message>
+                        <div>
+                            <div id="user-profile-2" class="user-profile">
+                                <div class="tabbable">
+
+                                    <div class="tab-content no-border padding-24">
+                                        <div id="home" class="tab-pane in active">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-3 center">
+                                                    <div>
+                                                        <span class="profile-picture">
+                                                                <img id="avatar" class="editable img-responsive" alt="{{name}} Avatar" ng-src="{{ profilefilenamePath || image || '/assets/avatars/profile-pic.jpg' }}" />
+                                                            </span>
+
+                                                        <div class="space-4"></div>
+                                                        <a ng-href="#/changeprofile"> <i class="pink icon-picture bigger-120"></i><span>Change Pic</span></a>
+                                                        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                                                            <div class="inline position-relative">
+                                                                <a href="javascript:void(0);" class="user-title-label dropdown-toggle" data-toggle="dropdown">
+                                                                    <i class="icon-circle light-green middle"></i> &nbsp;
+                                                                    <span class="white">  {{name=""?'Not available':name}}</span>
+                                                                </a>
+
+                                                                <ul class="align-left dropdown-menu dropdown-caret dropdown-lighter">
+                                                                    <li>
+                                                                        <a href="javascript:void(0);">
+                                                                            <i class="icon-circle green"></i> &nbsp;
+                                                                            <span class="green">Available</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="space space-4"></div>
+
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-9">
+                                                    <h4 class="blue">
+                                                        <span class="middle"> {{name=""?'Not available':name}} </span>
+
+                                                        <span class="label label-purple arrowed-in-right">
+                                                            <i class="icon-circle smaller-80 align-middle"></i>
+                                                            online
+                                                        </span>
+                                                    </h4>
+
+                                                    <div class="profile-user-info">
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Username </div>
+
+                                                            <div class="profile-info-value">
+                                                                <span> {{username=""?'Not available':username}} </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Name </div>
+
+                                                            <div class="profile-info-value">
+                                                                <span> {{name=""?'Not available':name}}  </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Location </div>
+
+                                                            <div class="profile-info-value">
+                                                                <i class="icon-map-marker light-orange bigger-110"></i>
+                                                                <span>{{location=""?'Not available':location}}</span>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Email </div>
+
+                                                            <div class="profile-info-value">
+                                                                <span>{{email=""?'Not available':email}}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name"> Joined </div>
+
+                                                            <div class="profile-info-value">
+                                                                <span> {{joined=""?'Not available':joined| date:'medium'}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="hr hr-8 dotted"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="space-20"></div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+<div ng-include='"templates/partials/header.html"'></div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+                try {
+                    ace.settings.check('main-container', 'fixed')
+                } catch (e) {
+                }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="javascript:void(0);">
+            <span class="menu-text"></span>
+        </a>
+
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                            try {
+                                ace.settings.check('breadcrumbs', 'fixed')
+                            } catch (e) {
+                            }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="javascript:void(0);">Home</a>
+                    </li>
+
+                    <li class="active">Friends</li>
+                </ul><!-- .breadcrumb -->
+
+                <div ng-include='"templates/partials/search.html"'></div>
+            </div>
+
+            <div class="page-content" ng-controller="FriendsCtrl" ng-init="getFriend()">
+                <div class="page-header">
+                    <h1>
+                        Friends
+                    </h1>
+                </div><!-- /.page-header -->
+                <flash-message duration="5000" show-close="true"></flash-message>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div id="friends" class="tab-pane">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label >Search Friend</label>
+                                    <input type="text" ng-model="search" class="form-control" placeholder="Search">
+                                </div>
+                            </form>
+                            <hr>
+                            <div class="profile-users clearfix">
+                                <div class="itemdiv memberdiv"  ng-repeat="friends in friendList| filter: search">
+                                    <div class="inline position-relative">
+                                        <div class="user">
+                                            <a href="#/friendprofile/{{friends.friend_id._id}}">
+                                                <img ng-src="{{friends.friend_id.image|| '/assets/avatars/profile-pic.jpg'}}" alt="{{friends.friend_id.username}}'s avatar" />
+                                                <!--<img src="assets/avatars/avatar4.png" alt="Bob Doe's avatar" />-->
+                                            </a>
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="javascript:void(0);">
+                                                    <span class="user-status status-online"></span>
+                                                    {{friends.friend_id.first_name == '' && friends.friend_id.last_name == '' ? friends.friend_id.username : friends.friend_id.first_name + ' ' + friends.friend_id.last_name| capitalize}}
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="tools action-buttons" ng-show="friends.status == 0">
+                                            <a href="javascript:void(0);" ng-click="acceptRequest(friends.friend_id._id)">
+                                                <i class="icon-plus-sign blue bigger-150"></i>
+                                                Accept
+                                            </a> |
+                                            <a href="javascript:void(0);" ng-click="rejectRequest(friends.friend_id._id)">
+                                                <i class="icon-remove red bigger-150"></i>
+                                                Reject
+                                            </a>
+                                        </div>
+                                        <div class="tools action-buttons" ng-show="friends.status == 1">
+                                            <a href="javascript:void(0);">
+                                                Request sent
+                                            </a> |
+                                            <a href="javascript:void(0);" ng-click="rejectRequest(friends.friend_id._id)">
+                                                <i class="icon-remove red bigger-150"></i>
+                                                Cancel request
+                                            </a>
+                                        </div>
+                                        <div class="tools action-buttons" ng-show="friends.status == 2">
+                                            <a href="javascript:void(0);" ng-click="removeFriend(friends.friend_id._id)">
+                                                <i class="icon-remove red bigger-150"></i>
+                                                Remove
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="hr hr10 hr-double"></div>
+
+                        </div><!-- /#friends -->
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+
+    </div><!-- /.main-container-inner -->
+
+</div><!-- /.main-container -->
+
+<script>
+            //show the user info on right or left depending on its position
+            $('.memberdiv').on('mouseenter', function() {
+                var $this = $(this);
+                var $parent = $this.closest('.tab-pane');
+
+                var off1 = $parent.offset();
+                var w1 = $parent.width();
+
+                var off2 = $this.offset();
+                var w2 = $this.width();
+
+                var place = 'left';
+                if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2))
+                    place = 'right';
+
+                $this.find('.popover').removeClass('right left').addClass(place);
+            }).on('click', function() {
+                return false;
+            });
+            $('.profile-social-links > a').tooltip();
+</script>

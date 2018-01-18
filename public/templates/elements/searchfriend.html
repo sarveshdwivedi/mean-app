@@ -1,0 +1,108 @@
+<div ng-include='"templates/partials/header.html"'></div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+                try {
+                    ace.settings.check('main-container', 'fixed')
+                } catch (e) {
+                }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="javascript:void(0);">
+            <span class="menu-text"></span>
+        </a>
+
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                            try {
+                                ace.settings.check('breadcrumbs', 'fixed')
+                            } catch (e) {
+                            }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="javascript:void(0);">Home</a>
+                    </li>
+
+                    <li class="active">Search result</li>
+                </ul><!-- .breadcrumb -->
+
+                <div ng-include='"templates/partials/search.html"'></div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        Search result
+                    </h1>
+                </div><!-- /.page-header -->
+                <flash-message duration="5000" show-close="true"></flash-message>
+                <div class="row" ng-show="userList">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div id="friends" class="tab-pane">
+                            <div class="profile-users clearfix">
+                                <div class="itemdiv memberdiv" ng-repeat="user in userList">
+                                    <div class="inline position-relative">
+                                        <div class="user">
+                                            <a href="javascript:void(0);">
+                                                <img ng-src="{{user.image|| '/assets/avatars/profile-pic.jpg'}}" alt="{{user.username}}'s avatar" />
+                                            </a>
+                                        </div>
+
+                                        <div class="body">
+                                            <div class="name">
+                                                <a href="javascript:void(0);">
+                                                    <span class="user-status status-online"></span>
+                                                    {{user.first_name == '' && user.last_name == '' ? user.username : user.first_name + ' ' + user.last_name| capitalize}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="user._id != friendsId">
+                                        <a href="javascript:void(0);" ng-click="addFriend(user._id)">
+                                            <i class="icon-plus-sign blue bigger-150"></i>
+                                            Add Friend
+                                        </a>
+                                    </div>
+                                    <div ng-if="user._id == friendsId">
+                                        <a href="javascript:void(0);" ng-click="rejectRequest(user._id)">
+                                            <i class="icon-remove red bigger-150"></i>
+                                            Reject
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="hr hr10 hr-double"></div>
+
+                        </div><!-- /#friends -->
+
+                    </div>
+                </div><!-- /.row -->
+                <div class="row" ng-show="!userList">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div id="friends" class="tab-pane">
+                            <div class="alert alert-danger">
+                                Search result not found. please try again to find someone other.
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+
+        </div><!-- /.main-content -->
+
+    </div><!-- /.main-container-inner -->
+
+</div><!-- /.main-container -->

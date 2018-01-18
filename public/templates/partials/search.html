@@ -1,0 +1,9 @@
+<div class="nav-search" id="nav-search" ng-controller="FriendsCtrl">    
+    <form class="form-search">
+        <span class="input-icon">
+            <input placeholder="Search friends..." ng-model="search.text" ng-change="searchFriend(search.text);
+                            redirect('/search/')" type="text" class="nav-search-input" id="nav-search-input" autocomplete="off" />
+            <i class="icon-search nav-search-icon"></i>
+        </span>
+    </form>
+</div><!-- #nav-search -->

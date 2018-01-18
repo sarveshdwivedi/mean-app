@@ -1,0 +1,62 @@
+<div ng-include='"templates/partials/header.html"'></div>
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="javascript:void(0);">
+            <span class="menu-text"></span>
+        </a>
+
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <!--<div class="main-content">-->
+             <div  class="main-content" ng-controller="PostCtrl" when-scrolled="loadImages()">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="javascript:void(0);">Home</a>
+                    </li>
+                    <li class="active">Dashboard</li>
+                </ul><!-- .breadcrumb -->
+
+               <div ng-include='"templates/partials/search.html"'></div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        Dashboard
+                        <small>
+                            <i class="icon-double-angle-right"></i>
+                            overview &amp; stats
+                        </small>
+                    </h1>
+                </div><!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                          <div ng-include='"templates/elements/publicpost.html"'></div>                   
+                    </div><!-- /.col -->
+                    
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+
+        
+    </div><!-- /.main-container-inner -->
+
+
+</div><!-- /.main-container -->

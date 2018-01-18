@@ -1,0 +1,104 @@
+<div ng-include='"templates/partials/header.html"'></div>
+
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+                try {
+                ace.settings.check('main-container', 'fixed')
+                } catch (e) {
+        }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="javascript:void(0);">
+            <span class="menu-text"></span>
+        </a>
+
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                            try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                            } catch (e) {
+                    }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="javascript:void(0);">Home</a>
+                    </li>
+                    <li class="active">User Profile</li>
+                </ul>
+                <!-- .breadcrumb -->
+                <div ng-include='"templates/partials/search.html"'></div>
+            </div>
+
+            <div class="page-content" ng-controller="UserCtrl" ng-init="getUserData()">
+                <div class="page-header">
+                    <h1>
+                        User Profile
+                        <small>
+                            <i class="icon-double-angle-right"></i>
+                            {{userData.first_name}} {{userData.last_name}} 
+                        </small>
+                    </h1>
+                </div>
+                <!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div id="user-profile-2" class="user-profile">
+                            <div class="tabbable">
+
+                                <div class="tab-content no-border padding-24">
+                                    <div id="home" class="tab-pane in active">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-3 center">
+                                                <form>
+                                                    <span class="profile-picture">
+                                                                <img id="avatar" class="editable img-responsive" alt="{{userData.first_name}} {{userData.last_name}} Avatar" ng-src="{{ profilefilenamePath || userData.image || '/assets/avatars/profile-pic.jpg' }}" />
+                                                            </span>
+                                                    <div class="fileUpload btn btn-primary">
+                                                        <div ng-controller="imageUploadCtrl">
+                                                            <input type="file" file-model="myFile" />
+                                                            <button ng-click="uploadFile()"><i class="pink icon-picture bigger-120"></i><span>Change Pic</span></button>
+                                                        </div>
+                                                    </div>
+                                                    <!--<img style="width:100px;" ngf-thumbnail="up.file"/>-->
+                                                </form>
+
+                                                <div class="space-4"></div>
+
+                                                <div class="space space-4"></div>
+
+                                            </div>
+
+                                        </div>
+                                        <!-- /row-fluid -->
+
+                                        <div class="space-20"></div>
+
+
+                                    </div>
+                                    <!-- #home -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGE CONTENT ENDS -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.page-content -->
+        </div>
+        <!-- /.main-content -->
+
+    </div>
+    <!-- /.main-container-inner -->
+</div>

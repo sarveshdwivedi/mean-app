@@ -1,0 +1,239 @@
+<div class="main-container login-layout">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="login-container">
+                    <div ng-include='"templates/partials/front_header.html"'></div>
+
+                    <div class="space-6"></div>
+
+                    <div class="position-relative">
+                        <div id="login-box" class="login-box visible widget-box no-border">
+                            <div class="widget-body">
+                                <div class="widget-main" ng-controller="UserCtrl">
+                                    <h4 class="header blue lighter bigger">
+                                        <i class="icon-coffee green"></i> Please Enter Your Information
+                                    </h4>
+
+                                    <div class="space-6"></div>
+                                    <div id="success" style="color: green;">{{ PostDataResponse}}</div>
+                                    <div id="error" style="color: red;">{{ ResponseDetails}}</div>
+                                    <flash-message duration="5000" show-close="true"></flash-message>
+                                    <div class="space-6"></div>
+
+                                    <form name="loginfrm">
+                                        <div layout="column" layout-padding>
+                                            <md-content class="md-no-momentum">
+                                                <md-input-container class="md-icon-float md-block">
+                                                    <!-- Use floating label instead of placeholder -->
+                                                    <label>Username</label>
+                                                    <input required ng-model="formData.username" type="text">
+                                                </md-input-container>
+                                                <md-input-container class="md-icon-float md-block">
+                                                    <!-- Use floating label instead of placeholder -->
+                                                    <label>Password</label>
+                                                    <input required ng-model="formData.password" type="password">
+                                                </md-input-container>
+                                                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                                                    <md-button ng-disabled="!loginfrm.$valid" ng-click="loginUser(formData)" type="submit" class="md-raised md-primary"><i class="icon-key"></i>Login</md-button>
+                                                </section>
+                                            </md-content>
+                                        </div>
+                                    </form>
+                                    <div class="social-or-login center">
+                                        <span class="bigger-110"></span>
+                                    </div>
+
+                                    <div class="social-login center">
+                                        <a target="_blank" href="facebook.com" class="btn btn-primary">
+                                            <i class="icon-facebook"></i>
+                                        </a>
+                                        <a target="_blank" href="twitter.com" class="btn btn-info">
+                                            <i class="icon-twitter"></i>
+                                        </a>
+                                        <a target="_blank" href="linkedin.com" class="btn btn-danger">
+                                            <i class="icon-linkedin"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- /widget-main -->
+
+                                <div class="toolbar clearfix">
+                                    <div>
+                                        <a href="#" onclick="show_box('forgot-box');
+                                                        return false;" class="forgot-password-link">
+                                            <i class="icon-arrow-left"></i> I forgot my password
+                                        </a>
+                                    </div>
+
+                                    <div>
+                                        <a href="#" onclick="show_box('signup-box');
+                                                        return false;" class="user-signup-link">
+                                            I want to register
+                                            <i class="icon-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /widget-body -->
+                        </div>
+                        <!-- /login-box -->
+
+                        <div id="forgot-box" class="forgot-box widget-box no-border">
+                            <div class="widget-body">
+                                <div class="widget-main" ng-controller="UserCtrl">
+                                    <h4 class="header red lighter bigger">
+                                        <i class="icon-key"></i> Retrieve Password
+                                    </h4>
+
+                                    <div class="space-6"></div>
+                                    <p>
+                                        Enter your email and to receive instructions
+                                    </p>
+                                    <div id="success" style="color: green;">{{ PostDataForgotResponse}}</div>
+                                    <div id="error" style="color: red;">{{ ResponseForgotDetails}}</div>
+                                    <flash-message duration="5000" show-close="true"></flash-message>
+                                    <form name='forgotForm'>
+                                        <fieldset>
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input ng-model="formData.email" name="email" type="email" class="form-control" placeholder="Email" required />
+                                                    <i class="icon-envelope"></i>
+                                                </span>
+                                                <span class="alert alert-danger" ng-show="forgotForm.email.$dirty && forgotForm.email.$invalid">
+                                                    <span ng-show="forgotForm.email.$error.required">Email is required.</span> 
+                                                </span>
+                                            </label>
+
+                                            <div class="clearfix">
+                                                <button ng-disabled="forgotForm.email.$dirty && forgotForm.email.$invalid" ng-click="ForgotPassword(formData)" type="button"
+                                                    class="width-35 pull-right btn btn-sm btn-danger">
+                                                    <i class="icon-lightbulb"></i>
+                                                    Send Me!
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <!-- /widget-main -->
+
+                                <div class="toolbar center">
+                                    <a href="#" onclick="show_box('login-box');
+                                                    return false;" class="back-to-login-link">
+                                        Back to login
+                                        <i class="icon-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- /widget-body -->
+                        </div>
+                        <!-- /forgot-box -->
+
+                        <div id="signup-box" class="signup-box widget-box no-border">
+                            <div class="widget-body">
+                                <div class="widget-main" ng-controller="UserCtrl" ng-init="checkLogin()">
+                                    <h4 class="header green lighter bigger">
+                                        <i class="icon-group blue"></i> New User Registration
+                                    </h4>
+
+                                    <div class="space-6"></div>
+                                    <p> Enter your details to begin: </p>
+                                    <div id="error" style="color: red;" ng-repeat="x in ResponseRegDetails">{{ x.msg}}</div>
+                                    <flash-message duration="5000" show-close="true"></flash-message>
+                                    <form name="register">
+                                        <fieldset>
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input ng-model="formData.email" name="email" type="email" class="form-control" placeholder="Email"  ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required />
+                                                    <i class="icon-envelope"></i>
+                                                </span>
+                                                 <span class="alert-danger" ng-show="register.email.$dirty && register.email.$invalid">
+                                                    <span ng-show="register.email.$error.required">Email is required.</span>
+                                                    <span ng-show="register.email.$error.pattern">Email is not valid.</span>
+                                                </span>
+                                            </label>
+
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input ng-model="formData.username" name="username" type="text" class="form-control" placeholder="Username" required />
+                                                    <i class="icon-user"></i>
+                                                </span>
+                                                <span class="alert-danger" ng-show="register.username.$dirty && register.username.$invalid">
+                                                    <span ng-show="register.username.$error.required">Username is required.</span> 
+                                                </span>                          
+                                            </label>
+
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input ng-model="formData.password" name="password" type="password" class="form-control" placeholder="Password" required />
+                                                    <i class="icon-lock"></i>
+                                                </span>
+                                                <span class="alert-danger" ng-show="register.password.$dirty && register.password.$invalid">
+                                                    <span ng-show="register.password.$error.required">Password is required.</span>
+                                                </span>
+                                            </label>
+
+                                            <label class="block clearfix">
+                                                <span class="block input-icon input-icon-right">
+                                                    <input name="password_confirmation" compare-to="formData.password" ng-model="formData.password_confirmation" required type="password" class="form-control" placeholder="Repeat password" />
+                                                    <i class="icon-retweet"></i>
+                                                </span>
+                                                <p class="alert-danger" ng-show="register.password_confirmation.$error.compareTo && register.password_confirmation.$dirty">Confirm password is does not match with password.</p>
+                                                <p class="alert-danger" ng-show="serverErros.password_confirmation">{{serverErros.password_confirmation}}</p>
+                                            </label>
+
+                                            <label class="block">
+                                                <input ng-model="formData.term" name="term" value="1" type="checkbox" class="ace" />
+                                                <span class="lbl">
+                                                    I accept the
+                                                    <a href="#">User Agreement</a>
+                                                </span>
+                                                <span class="alert-danger" ng-show="register.term.$dirty && register.term.$invalid">
+                                                    <span ng-show="register.term.$error.required">Please check user agreement.</span>
+                                                </span>
+                                            </label>
+
+                                            <div class="space-24"></div>
+
+                                            <div class="clearfix">
+                                                <button type="reset" class="width-30 pull-left btn btn-sm">
+                                                    <i class="icon-refresh"></i>
+                                                    Reset
+                                                </button>
+
+                                                <button ng-click="registerUser(formData)" ng-disabled="!register.$valid" type="button" class="width-65 pull-right btn btn-sm btn-success">
+                                                    Register
+                                                    <i class="icon-arrow-right icon-on-right"></i>
+                                                </button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+
+                                <div class="toolbar center">
+                                    <a href="#" onclick="show_box('login-box');
+                                                    return false;" class="back-to-login-link">
+                                        <i class="icon-arrow-left"></i> Back to login
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- /widget-body -->
+                        </div>
+                        <!-- /signup-box -->
+                    </div>
+                    <!-- /position-relative -->
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+</div>
+<!-- /.main-container -->
+
+<script type="text/javascript">
+            function show_box(id) {
+                jQuery('.widget-box.visible').removeClass('visible');
+                jQuery('#' + id).addClass('visible');
+            }
+</script>

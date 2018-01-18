@@ -1,0 +1,130 @@
+<div ng-include='"templates/partials/header.html"'></div>
+<div id="main-container" class="main-container">
+    <script type="text/javascript">
+                try {
+                    ace.settings.check('main-container', 'fixed')
+                } catch (e) {
+                }
+    </script>
+
+    <div class="main-container-inner">
+        <a href="javascript:void(0)" id="menu-toggler" class="menu-toggler">
+            <span class="menu-text"></span>
+        </a>
+
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <div class="main-content" ng-controller="UserCtrl" ng-init="getUserData()">
+            <div id="breadcrumbs" class="breadcrumbs">
+                <script type="text/javascript">
+                            try {
+                                ace.settings.check('breadcrumbs', 'fixed')
+                            } catch (e) {
+                            }
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="javascript:void(0)">Home</a>
+                    </li>
+
+                    <li class="active">Edit {{userData.first_name}} {{userData.first_name}} Profile</li>
+                </ul><!-- .breadcrumb -->
+
+                <div ng-include='"templates/partials/search.html"'></div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        Edit {{userData.name}} Profile
+                    </h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div id="success" style="color: green;">{{ PostDataregResponse}}</div>
+                        <div id="error" style="color: red;" ng-repeat="x in ResponseDetails">{{ x.msg}}</div>
+                        <flash-message duration="5000" show-close="true"></flash-message>
+                        <form role="form" name="editprofile" class="form-horizontal">
+
+
+                            <div class="form-group">
+                                <label for="form-field-2" class="col-sm-3 control-label no-padding-right"> First Name </label>
+
+                                <div class="col-sm-9">
+                                    <input required ng-model="userData.first_name" name="first_name" type="text" class="col-xs-10 col-sm-5" placeholder="First Name" id="form-field-1">
+                                    <span class="alert alert-danger" ng-show="editprofile.first_name.$dirty && editprofile.name.$invalid">
+                                        <span ng-show="editprofile.first_name.$error.required">First Name is required.</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="form-field-2" class="col-sm-3 control-label no-padding-right"> Last Name </label>
+
+                                <div class="col-sm-9">
+                                    <input required ng-model="userData.last_name" name="last_name" type="text" class="col-xs-10 col-sm-5" placeholder="Last Name" id="form-field-2">
+                                    <span class="alert alert-danger" ng-show="editprofile.last_name.$dirty && editprofile.last_name.$invalid">
+                                        <span ng-show="editprofile.last_name.$error.required">Last Name is required.</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-field-2" class="col-sm-3 control-label no-padding-right"> Location </label>
+
+                                <div class="col-sm-9">
+                                    <input required ng-model="userData.location" googleplace name="location" type="text" class="col-xs-10 col-sm-5" placeholder="Location" id="form-field-3">
+                                    <span class="alert alert-danger" ng-show="editprofile.location.$dirty && editprofile.location.$invalid">
+                                        <span ng-show="editprofile.location.$error.required">Location is required.</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-field-2" class="col-sm-3 control-label no-padding-right"> Phone Number </label>
+
+                                <div class="col-sm-9">
+                                    <input required ng-model="userData.phone_number" name="phone_number" type="text" class="col-xs-10 col-sm-5" placeholder="Phone number" id="form-field-4">
+                                    <span class="alert alert-danger" ng-show="editprofile.phone_number.$dirty && editprofile.phone_number.$invalid">
+                                        <span ng-show="editprofile.phone_number.$error.required">Phone number is required.</span>
+                                    </span>
+                                </div>
+                            </div>                           
+                            <div class="form-group">
+                                <label for="form-field-2" class="col-sm-3 control-label no-padding-right"> About me </label>
+
+                                <div class="col-sm-9">
+                                    <input ng-model="userData.aboutme" name="aboutme" type="text" class="col-xs-10 col-sm-5" placeholder="Write something about you" id="form-field-5">
+                                    
+                                </div>
+                            </div>                           
+
+
+
+                            <div class="clearfix form-actions">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button ng-disabled="!editprofile.$valid" ng-click="submitUserData(userData)" type="button" class="btn btn-info">
+                                        <i class="icon-ok bigger-110"></i>
+                                        Update
+                                    </button>
+
+                                    &nbsp; &nbsp; &nbsp;
+                                    <button type="reset" class="btn">
+                                        <i class="icon-undo bigger-110"></i>
+                                        Reset
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="hr hr-24"></div>
+
+                        </form>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+
+    </div><!-- /.main-container-inner -->
+
+</div><!-- /.main-container -->

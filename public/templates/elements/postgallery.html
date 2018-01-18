@@ -1,0 +1,105 @@
+<div ng-include='"templates/partials/header.html"'></div>
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+                try {
+                    ace.settings.check('main-container', 'fixed')
+                } catch (e) {
+                }
+    </script>
+
+    <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="javascript:void(0);">
+            <span class="menu-text"></span>
+        </a>
+
+        <div ng-include='"templates/partials/left_menu.html"'></div>
+
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                            try {
+                                ace.settings.check('breadcrumbs', 'fixed')
+                            } catch (e) {
+                            }
+                </script>
+
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="javascript:void(0);">Home</a>
+                    </li>
+                    <li class="active">Gallery</li>
+                </ul><!-- .breadcrumb -->
+
+               <div ng-include='"templates/partials/search.html"'></div>
+            </div>
+
+            <div class="page-content" ng-controller="GalleryCtrl" ng-init="getMessagesImages()">
+                <div class="page-header">
+                    <h1>
+                        Gallery
+                        <small>
+                            <i class="icon-double-angle-right"></i>
+                            Wall Post
+                        </small>
+                    </h1>
+                </div><!-- /.page-header -->
+                <div class="row" ng-controller="GalleryCtrl" ng-init="getMessagesImages()">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+
+                        <div class="row-fluid" ng-repeat="message in messages">
+                            <ul class="ace-thumbnails">                                
+
+                                <li ng-repeat="image in message.image">
+                                    <a  width="150" height="150" href="images/uploadspost/{{image}}" data-rel="colorbox">
+                                        <img alt="150x150" width="150" height="150"  ng-src="/images/uploadspost/{{image}}" />
+                                        <div class="text">
+                                            <div class="inner">{{message.message}}</div>
+                                        </div>
+                                    </a>
+                                </li> 
+
+                            </ul>
+                        </div><!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+
+
+    </div><!-- /.main-container-inner -->
+
+    <a href="javascript:void(0);" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+<script type="text/javascript">
+            jQuery(function($) {
+                var colorbox_params = {
+                    reposition: true,
+                    scalePhotos: true,
+                    scrolling: false,
+                    previous: '<i class="icon-arrow-left"></i>',
+                    next: '<i class="icon-arrow-right"></i>',
+                    close: '&times;',
+                    current: '{current} of {total}',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    onOpen: function() {
+                        document.body.style.overflow = 'hidden';
+                    },
+                    onClosed: function() {
+                        document.body.style.overflow = 'auto';
+                    },
+                    onComplete: function() {
+                        $.colorbox.resize();
+                    }
+                };
+
+                $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+                $("#cboxLoadingGraphic").append("<i class='icon-spinner orange'></i>");//let's add a custom loading icon
+
+            })
+
+</script>

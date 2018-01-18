@@ -1,0 +1,133 @@
+<div class="" ng-controller="PostCtrl" ng-init="getMessages()">
+    <div class="row">
+        <div id="success" style="color: green;">{{ PostDataResponse}}</div>
+        <flash-message duration="5000" show-close="true"></flash-message>
+        <br />
+        <div class="well">
+            <div ng-show="{{filenamePath}}" style="width:450px; float:left;width:350px">{{filenamePath}}</div>
+            <form role="form" id="messageForm" name="messageForm" ng-submit="sendMessage()" novalidate>
+                <md-input-container class="md-block">
+                    <label>Status Update</label>
+                    <textarea required ng-model="message" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                    <p style="color: crimson;" ng-show="messageForm.message.$error.required && messageForm.message.$dirty">Message is required.</p>
+                    <p style="color: crimson;" ng-show="serverErros.message">{{serverErros.message}}</p>
+                </md-input-container>
+                <div>
+                    <input type="hidden" ng-model="filenamePath" name="filenamePath">
+                </div>                
+                <button class="btn btn-primary" ng-disabled="!messageForm.$valid" type="submit" style="float: right; margin: -16px 12px;">Post Message</button>
+                <br/>
+            </form>
+        </div>
+        <div ng-if="messages != ''" class="message_block col-lg-12" ng-repeat="message in messages">
+            <div class="hdng form-group ace-nav">
+                <span class="pull-left" style="color: green;"> 
+                    <img style="display: inline;" alt="" width="50" height="50" ng-src="{{message.user.image|| '/assets/avatars/profile-pic.jpg' }}" class="post-user-photo">{{message.user.first_name == '' && message.user.last_name == '' ? message.user.username : message.user.first_name + ' ' + message.user.last_name| capitalize}}</span>
+                <span class="pull-right"><i class="icon-calendar"></i> {{message.create_date| date:'medium'}} | <a ng-click="deletePost(message._id)" ng-if="message.user._id == userData._id" href="javascript:void(0);">Remove</a></span>
+            </div>
+
+            <hr>
+
+            <!-- Post Content -->
+            <div class="col-xs-12 col-md-12 col-sm-12 msg">
+                <h4>Message:</h4>
+                <div class="lead form-group" style="display: block">{{message.message}}</div>
+            </div>
+
+
+            <div class="col-xs-12 col-md-12 col-sm-12 msgImage" ng-if="message.image != ''">
+                <h4>Message Image:</h4>
+                <div class="row-fluid">
+                    <ul class="ace-thumbnails">
+
+                        <li ng-repeat="image in message.image">
+                            <a width="150" height="150" href="images/uploadspost/{{image}}" data-rel="colorbox">
+                                <img alt="150x150" width="150" height="150" ng-src="/images/uploadspost/{{image}}" />
+                                <div class="text">
+                                    <div class="inner">{{message.message}}</div>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-12 col-sm-12">
+                <h4>Comments:</h4>
+                <!--Comment -->
+                <div class="comments form-group" ng-repeat="comment in message.comments" style="display: block">
+                    <div class="media ace-nav">
+                        <p>
+                            <a href="javascript:void(0);" class="pull-left">
+                                <img width="35" height="35" alt="" ng-src="{{comment.user[0].image|| '/assets/avatars/profile-pic.jpg' }}" class="post-user-photo">
+                            </a>
+                        </p>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <small><b style="color: teal;">{{comment.user[0].first_name == '' && comment.user[0].last_name == '' ? comment.user[0].username : comment.user[0].first_name + ' ' + comment.user[0].last_name| capitalize }}</b></small>
+                                <small class="pull-right"><i class="icon-calendar"></i> {{comment.create_date| date:'medium'}} | <a  ng-if="comment.user[0]._id == userData._id" ng-click="deleteComment(comment._id)" href="javascript:void(0);">Remove</a></small>
+                            </h4>
+                            <hr> {{comment.comment}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-12 col-sm-12">
+                <div class="well" style="display: block">
+                    <form role="form" id="messageForm" name="messageForm{{message._id}}" ng-submit="sendComment(commentData, message._id, commentfilenamePath)"
+                        novalidate>
+                        <md-input-container class="md-block">
+                            <label>Leave a Comment</label>
+                            <textarea required ng-model="commentData.comment" md-maxlength="150" rows="3" md-select-on-focus></textarea>
+                        </md-input-container>
+                        <div>
+                            <input type="hidden" ng-model="commentfilenamePath" name="commentfilenamePath">
+                        </div>
+                        <button style="float: right; margin: -16px 12px;" class="btn btn-primary" ng-disabled="!messageForm{{message._id}}.$valid"
+                            type="submit">Post Comment</button>
+                        <br/> {{commentfilenamePath}}
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div ng-if="lod" class="col-md-7 center-block">
+            <button type="button" class="btn btn-primary" style="float: right; margin: -16px 12px;" ng-controller="PostCtrl" ng-click="getMoreData(lastItem._id)">Load More</button>
+        </div>
+
+        <div class="message_block col-lg-12" ng-if="messages == ''">
+            <div class="alert alert-danger">
+                Post result not found.
+                <br>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+            jQuery(function($) {
+            var colorbox_params = {
+            reposition: true,
+                    scalePhotos: true,
+                    scrolling: false,
+                    previous: '<i class="icon-arrow-left"></i>',
+                    next: '<i class="icon-arrow-right"></i>',
+                    close: '&times;',
+                    current: '{current} of {total}',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    onOpen: function() {
+                    document.body.style.overflow = 'hidden';
+                    },
+                    onClosed: function() {
+                    document.body.style.overflow = 'auto';
+                    },
+                    onComplete: function() {
+                    $.colorbox.resize();
+                    }
+            };
+                    $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+                    $("#cboxLoadingGraphic").append("<i class='icon-spinner orange'></i>"); //let's add a custom loading icon
+            })
+
+</script>

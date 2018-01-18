@@ -1,0 +1,38 @@
+<div class="main-container login-layout">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="login-container">
+                    <div ng-include='"templates/partials/front_header.html"'></div>
+
+                    <div class="space-6"></div>
+
+                    <div class="position-relative" ng-init="useractivate()" ng-controller="UserCtrl">
+                        <div id="login-box" class="login-box visible widget-box no-border">
+                            <div class="widget-body">
+                                <div id="success" style="color: green;">{{PostDataResponse}}</div>
+                                <div id="error" style="color: red;">{{ ResponseDetails}}</div>     
+                                <flash-message show-close="true"></flash-message>
+                                <div class="toolbar clearfix">
+                                    <div>
+                                        <a href="/" class="forgot-password-link">
+                                            <i class="icon-arrow-left"></i>
+                                           Back to login
+                                        </a>
+                                    </div>
+
+                                    <div>
+                                        <a class="user-signup-link" href="/">
+                                            I want to register
+                                            <i class="icon-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /signup-box -->
+                    </div><!-- /position-relative -->
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div>
+</div><!-- /.main-container -->
